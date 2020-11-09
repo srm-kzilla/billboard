@@ -25,6 +25,7 @@
     "express": "^4.17.1",
     "helmet": "^4.1.1",
     "mongodb": "^3.6.2",
+    "path": "^0.12.7",
     "winston": "^3.3.3"
   },
   "author": "ruddha2001",
