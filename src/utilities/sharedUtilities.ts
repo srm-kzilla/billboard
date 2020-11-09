@@ -13,7 +13,6 @@ type IncomingConfiguration = {
   title?: string;
   subtitle?: string;
   custom?: boolean;
-  template?:string;
   filePath?:string;
 }
 
