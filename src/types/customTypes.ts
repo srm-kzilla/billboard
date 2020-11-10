@@ -10,6 +10,6 @@ export type IncomingConfiguration = {
   theme?: string;
   title?: string;
   subtitle?: string;
-  custom?: boolean;
+  custom?: string;
   filePath?: string;
 };
