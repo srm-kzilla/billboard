@@ -1,20 +1,5 @@
 import { join } from 'path';
-
-type RequestConfiguration = {
-  theme: string;
-  title: string;
-  subtitle: string;
-  custom: boolean;
-  template: string;
-};
-
-type IncomingConfiguration = {
-  theme?: string;
-  title?: string;
-  subtitle?: string;
-  custom?: boolean;
-  filePath?: string;
-};
+import { IncomingConfiguration, RequestConfiguration } from '../types/customTypes';
 
 export const getRequiredConfiguration = (data: IncomingConfiguration): RequestConfiguration => {
   const finalConfig = {
