@@ -8,6 +8,8 @@ export const getRequiredConfiguration = (data: IncomingConfiguration): RequestCo
     subtitle: data.subtitle ? data.subtitle : '@srmkzilla',
     custom: data.custom ? ((<unknown>data.custom) as boolean) : false,
     template: getTemplateFile(data.custom, data.filePath, data.theme),
+    fontSize: data.fontSize ? data.fontSize : '96px',
+    fileType: data.fileType ? data.fileType : 'png',
   };
 
   return finalConfig;

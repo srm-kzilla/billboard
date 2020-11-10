@@ -4,6 +4,8 @@ export type RequestConfiguration = {
   subtitle: string;
   custom: boolean;
   template: string;
+  fontSize: string;
+  fileType: string;
 };
 
 export type IncomingConfiguration = {
@@ -12,4 +14,6 @@ export type IncomingConfiguration = {
   subtitle?: string;
   custom?: string;
   filePath?: string;
+  fontSize?: string;
+  fileType?: string;
 };
