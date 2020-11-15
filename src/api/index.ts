@@ -14,13 +14,8 @@ export default (): Router => {
   return app;
 };
 
-const templateHandler = (req: Request, res: Response) => {
-  console.log(req.query.theme);
-  console.log(req.query.title);
-  console.log(req.query.subtitle);
-  console.log(req.query.fontSize);
-  console.log(req.query.fileType);
-  console.log(req.params.template);
+const templateHandler = async (req: Request, res: Response) => {
+  console.log(await getRequiredConfiguration(req.query));
   res.sendStatus(200);
 };
 
