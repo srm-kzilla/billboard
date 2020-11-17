@@ -1,4 +1,5 @@
 import { join } from 'path';
+import { chromium } from 'playwright';
 import { IncomingConfiguration, RequestConfiguration } from '../types/customTypes';
 
 export const getRequiredConfiguration = (data: IncomingConfiguration): RequestConfiguration => {
@@ -23,6 +24,16 @@ const getTemplateFile = (custom?: string, filePath?: string, theme?: string): st
   }
 };
 
-export const getHtmlCode = async (config: RequestConfiguration): Promise<void> => {
+const getHtmlCode = async (config: RequestConfiguration): Promise<string> => {
   console.log(config);
+  return 'Hello';
+};
+
+export const getScreenshot = async (config: RequestConfiguration): Promise<Buffer> => {
+  const browser = await chromium.launch({ headless: process.env.NODE_ENV === 'development' ? false : true });
+  const page = await browser.newPage();
+  await page.setViewportSize({ width: 2048, height: 1170 });
+  await page.setContent(await getHtmlCode(config));
+  const file = await page.screenshot({ type: config.fileType === 'jpeg' ? 'jpeg' : 'png' });
+  return file;
 };
