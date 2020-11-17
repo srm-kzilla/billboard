@@ -7,7 +7,7 @@ export const getRequiredConfiguration = (data: IncomingConfiguration): RequestCo
     theme: data.theme ? data.theme : 'light',
     title: data.title ? data.title : 'With love from SRMKZILLA',
     subtitle: data.subtitle ? data.subtitle : '@srmkzilla',
-    custom: data.custom ? ((<unknown>data.custom) as boolean) : false,
+    custom: data.custom ? (data.custom === 'true' ? true : false) : false,
     template: getTemplateFile(data.custom, data.filePath, data.theme),
     fontSize: data.fontSize ? data.fontSize : '96px',
     fileType: data.fileType ? data.fileType : 'png',
