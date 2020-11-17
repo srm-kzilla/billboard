@@ -11,7 +11,9 @@
   "devDependencies": {
     "@types/express": "^4.17.8",
     "@types/mongodb": "^3.5.31",
+    "@types/multer": "^1.4.4",
     "@types/node": "^14.14.5",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
     "eslint": "^7.12.1",
@@ -25,8 +27,10 @@
     "express": "^4.17.1",
     "helmet": "^4.1.1",
     "mongodb": "^3.6.2",
+    "multer": "^1.4.2",
+    "uuid": "^8.3.1",
     "winston": "^3.3.3"
   },
   "author": "ruddha2001",
-  "license": ""
+  "license": "MIT"
 }
