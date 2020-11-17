@@ -1,7 +1,7 @@
 import logger from '../../loaders/logger';
 import { RequestConfiguration } from '../../types/customTypes';
 import { writeNewImage } from '../../utilities/imageFileHandler';
-import { getHtmlCode } from '../../utilities/sharedUtilities';
+import { getScreenshot } from '../../utilities/sharedUtilities';
 
 export const customFilepathGeneration = async (fileName: string, fileData: Buffer): Promise<string> => {
   try {
@@ -12,6 +12,6 @@ export const customFilepathGeneration = async (fileName: string, fileData: Buffe
   }
 };
 
-export const requestController = async (config: RequestConfiguration): Promise<void> => {
-  await getHtmlCode(config);
+export const requestController = async (config: RequestConfiguration): Promise<Buffer> => {
+  return await getScreenshot(config);
 };

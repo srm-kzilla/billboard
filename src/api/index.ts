@@ -15,13 +15,15 @@ export default (): Router => {
 };
 
 const templateHandler = async (req: Request, res: Response) => {
-  await requestController(await getRequiredConfiguration(req.query));
-  res.sendStatus(200);
+  const file = await requestController(await getRequiredConfiguration(req.query));
+  res.setHeader('Content-Type', `image/${req.query.fileType ? req.query.fileType : 'png'}`);
+  res.end(file);
 };
 
 const customTemplateHandler = async (req: Request, res: Response) => {
   req.query.filePath = await customFilepathGeneration(req.file.originalname, req.file.buffer);
   req.query.custom = 'true';
-  await requestController(await getRequiredConfiguration(req.query));
-  res.sendStatus(200);
+  const file = await requestController(await getRequiredConfiguration(req.query));
+  res.setHeader('Content-Type', `image/${req.query.fileType ? req.query.fileType : 'png'}`);
+  res.end(file);
 };
