@@ -30,7 +30,7 @@ const getHtmlCode = async (config: RequestConfiguration): Promise<string> => {
 };
 
 export const getScreenshot = async (config: RequestConfiguration): Promise<Buffer> => {
-  const browser = await chromium.launch({ headless: process.env.NODE_ENV === 'development' ? false : true });
+  const browser = await chromium.launch({ headless: process.env.NODE_ENV !== 'development' });
   const page = await browser.newPage();
   await page.setViewportSize({ width: 2048, height: 1170 });
   await page.setContent(await getHtmlCode(config));
