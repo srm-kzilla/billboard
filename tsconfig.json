@@ -12,7 +12,9 @@
     "outDir": "./build",
     "allowJs": true,
     "noEmit": false,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "lib": ["DOM"],
+    "jsx": "react"
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules", "tests", "build"]
