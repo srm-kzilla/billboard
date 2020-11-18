@@ -12,7 +12,7 @@ export type IncomingConfiguration = {
   theme?: string;
   title?: string;
   subtitle?: string;
-  custom?: string;
+  custom?: boolean;
   filePath?: string;
   fontSize?: string;
   fileType?: string;
