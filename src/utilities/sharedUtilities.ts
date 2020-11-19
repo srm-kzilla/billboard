@@ -74,5 +74,6 @@ export const getScreenshot = async (config: RequestConfiguration): Promise<Buffe
   await page.setViewportSize({ width: 2048, height: 1170 });
   await page.setContent(await getHtmlCode(config));
   const file = await page.screenshot({ type: config.fileType === 'jpeg' ? 'jpeg' : 'png' });
+  await browser.close();
   return file;
 };
