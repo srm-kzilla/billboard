@@ -1,6 +1,7 @@
-import { join } from 'path';
 import { chromium } from 'playwright';
+import ReactDOMServer from 'react-dom/server';
 import { IncomingConfiguration, RequestConfiguration } from '../types/customTypes';
+import Component from './reactComponent';
 
 export const getRequiredConfiguration = (data: IncomingConfiguration): RequestConfiguration => {
   const finalConfig = {
@@ -20,13 +21,14 @@ const getTemplateFile = (custom?: boolean, filePath?: string, theme?: string): s
   if (custom) {
     return filePath;
   } else {
-    return join(__dirname, '..', 'assets', theme === 'dark' ? 'default-dark.png' : 'default-light.png');
+    return theme === 'dark' ? 'default-dark.png' : 'default-light.png';
   }
 };
 
 const getHtmlCode = async (config: RequestConfiguration): Promise<string> => {
   console.log(config);
-  return 'Hello';
+  const htmlSting = ReactDOMServer.renderToString(Component(config));
+  return htmlSting;
 };
 
 export const getScreenshot = async (config: RequestConfiguration): Promise<Buffer> => {
