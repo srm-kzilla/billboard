@@ -11,6 +11,7 @@ export default ({ app }: { app: express.Application }): void => {
    * Health Check endpoints
    */
 
+  app.set('trust proxy', 1);
   app.use('/assets', express.static(join(__dirname, '..', 'assets')));
   app.get('/healthcheck', (req, res) => {
     const healthcheck = {
