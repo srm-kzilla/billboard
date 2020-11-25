@@ -9,5 +9,5 @@ export const writeNewImage = async (data: Buffer, fileName: string): Promise<str
 };
 
 export const deleteImage = async (filePath: string): Promise<void> => {
-  await fsPromise.unlink(join(__dirname, '..', 'assets', filePath));
+  fsPromise.unlink(join(__dirname, '..', 'assets', filePath));
 };
