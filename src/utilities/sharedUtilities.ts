@@ -1,6 +1,8 @@
-import { join } from 'path';
 import { chromium } from 'playwright';
+import ReactDOMServer from 'react-dom/server';
+import config from '../config';
 import { IncomingConfiguration, RequestConfiguration } from '../types/customTypes';
+import Component from './reactComponent';
 
 export const getRequiredConfiguration = (data: IncomingConfiguration): RequestConfiguration => {
   const finalConfig = {
@@ -9,7 +11,7 @@ export const getRequiredConfiguration = (data: IncomingConfiguration): RequestCo
     subtitle: data.subtitle ? data.subtitle : '@srmkzilla',
     custom: data.custom ? data.custom : false,
     template: getTemplateFile(data.custom, data.filePath, data.theme),
-    fontSize: data.fontSize ? data.fontSize : '96px',
+    fontSize: data.fontSize ? data.fontSize : '120px',
     fileType: data.fileType ? data.fileType : 'png',
   };
 
@@ -20,13 +22,50 @@ const getTemplateFile = (custom?: boolean, filePath?: string, theme?: string): s
   if (custom) {
     return filePath;
   } else {
-    return join(__dirname, '..', 'assets', theme === 'dark' ? 'default-dark.png' : 'default-light.png');
+    return theme === 'dark' ? 'default-dark.png' : 'default-light.png';
   }
 };
 
 const getHtmlCode = async (config: RequestConfiguration): Promise<string> => {
-  console.log(config);
-  return 'Hello';
+  const htmlSting = ReactDOMServer.renderToString(Component(config));
+  return htmlSting;
+};
+
+export const getCssCode = (): string => {
+  return `@font-face {
+    font-family: bold-font;
+    src: url(http://127.0.0.1:${config.port}/assets/bold.woff2);
+  }
+
+@font-face {
+    font-family: book-font;
+    src: url(http://127.0.0.1:${config.port}/assets/book.woff2);
+  }
+
+#title {
+    width: 100%;
+    text-align: center;
+    margin-top: 400px;
+    font-family: book-font, sans-serif;
+}
+
+#subtitle{
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: 15px;
+    font-size: 70px;
+    font-family: bold-font, sans-serif;
+}
+
+#customText{
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: 3px;
+    font-size: 40px;
+    font-family: 'bold', sans-serif;
+}`;
 };
 
 export const getScreenshot = async (config: RequestConfiguration): Promise<Buffer> => {
@@ -35,5 +74,6 @@ export const getScreenshot = async (config: RequestConfiguration): Promise<Buffe
   await page.setViewportSize({ width: 2048, height: 1170 });
   await page.setContent(await getHtmlCode(config));
   const file = await page.screenshot({ type: config.fileType === 'jpeg' ? 'jpeg' : 'png' });
+  await browser.close();
   return file;
 };

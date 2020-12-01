@@ -1,16 +1,22 @@
 import { Router, Request, Response } from 'express';
+import expressRateLimit from 'express-rate-limit';
 import { customFilepathGeneration, requestController } from './controllers/requestController';
 import multer, { MulterError } from 'multer';
 import { getRequiredConfiguration } from '../utilities/sharedUtilities';
 import { IncomingConfiguration } from '../types/customTypes';
 
+const rateLimiter = expressRateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 30,
+  message: 'You are limited to 30 custom OG images per minute.',
+});
 const upload = multer({ storage: multer.memoryStorage() });
 
 export default (): Router => {
   const app = Router();
 
   app.get('/:template', templateHandler);
-  app.post('/custom', upload.single('image'), customTemplateHandler);
+  app.post('/custom', rateLimiter, upload.single('image'), customTemplateHandler);
   app.use(errorHandler);
 
   return app;

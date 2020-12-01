@@ -1,4 +1,3 @@
-import path from 'path';
 import logger from '../../loaders/logger';
 import { RequestConfiguration } from '../../types/customTypes';
 import { deleteImage, writeNewImage } from '../../utilities/imageFileHandler';
@@ -6,10 +5,10 @@ import { getScreenshot } from '../../utilities/sharedUtilities';
 
 export const customFilepathGeneration = async (fileName: string, fileData: Buffer): Promise<string> => {
   try {
-    return path.join(__dirname, '..', '..', '..', await writeNewImage(fileData, fileName));
+    return writeNewImage(fileData, fileName);
   } catch (error) {
     logger.error(error);
-    throw error;
+    throw Error('Could not create new image');
   }
 };
 
@@ -22,6 +21,6 @@ export const requestController = async (config: RequestConfiguration): Promise<B
     return screenshotBuffer;
   } catch (error) {
     logger.error(error);
-    throw error;
+    throw Error('Could not grab a screenshot');
   }
 };
