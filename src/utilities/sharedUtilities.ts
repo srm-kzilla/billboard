@@ -11,7 +11,7 @@ export const getRequiredConfiguration = (data: IncomingConfiguration): RequestCo
     subtitle: data.subtitle ? data.subtitle : '@srmkzilla',
     custom: data.custom ? data.custom : false,
     template: getTemplateFile(data.custom, data.filePath, data.theme),
-    fontSize: data.fontSize ? data.fontSize : '120px',
+    fontSize: data.fontSize ? data.fontSize : getFontSize(data),
     fileType: data.fileType ? data.fileType : 'png',
   };
 
@@ -29,6 +29,18 @@ const getTemplateFile = (custom?: boolean, filePath?: string, theme?: string): s
 const getHtmlCode = async (config: RequestConfiguration): Promise<string> => {
   const htmlSting = ReactDOMServer.renderToString(Component(config));
   return htmlSting;
+};
+
+const getFontSize = (config: IncomingConfiguration): string => {
+  const size = config.title ? config.title.length : 24;
+
+  if(size <= 25){
+    return '120px';
+  }else if(size >25 && size<=35){
+    return '96px';
+  }else if(size >35 && size<=45){
+    return '70px';
+  }
 };
 
 export const getCssCode = (): string => {
