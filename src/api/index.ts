@@ -4,6 +4,7 @@ import { customFilepathGeneration, requestController } from './controllers/reque
 import multer, { MulterError } from 'multer';
 import { getRequiredConfiguration } from '../utilities/sharedUtilities';
 import { IncomingConfiguration } from '../types/customTypes';
+import { validateQuery } from './middlewares/queryValidation';
 
 const rateLimiter = expressRateLimit({
   windowMs: 1 * 60 * 1000,
@@ -15,8 +16,8 @@ const upload = multer({ storage: multer.memoryStorage() });
 export default (): Router => {
   const app = Router();
 
-  app.get('/:template', templateHandler);
-  app.post('/custom', rateLimiter, upload.single('image'), customTemplateHandler);
+  app.get('/:template', validateQuery, templateHandler);
+  app.post('/custom', rateLimiter, validateQuery, upload.single('image'), customTemplateHandler);
   app.use(errorHandler);
 
   return app;
