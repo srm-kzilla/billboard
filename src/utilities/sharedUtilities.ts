@@ -27,8 +27,8 @@ const getTemplateFile = (custom?: boolean, filePath?: string, theme?: string): s
 };
 
 const getHtmlCode = async (config: RequestConfiguration): Promise<string> => {
-  const htmlSting = ReactDOMServer.renderToString(Component(config));
-  return htmlSting;
+  const htmlString = ReactDOMServer.renderToString(Component(config));
+  return htmlString;
 };
 
 const getFontSize = (config: IncomingConfiguration): string => {
