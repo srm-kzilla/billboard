@@ -34,11 +34,11 @@ const getHtmlCode = async (config: RequestConfiguration): Promise<string> => {
 const getFontSize = (config: IncomingConfiguration): string => {
   const size = config.title ? config.title.length : 24;
 
-  if(size <= 25){
+  if (size <= 25) {
     return '120px';
-  }else if(size >25 && size<=35){
+  } else if (size > 25 && size <= 40) {
     return '96px';
-  }else if(size >35 && size<=45){
+  } else {
     return '70px';
   }
 };
