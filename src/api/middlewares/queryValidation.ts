@@ -23,6 +23,6 @@ export const validateQuery = async (req: Request, res: Response, next: NextFunct
     await querySchema.validate(req.query);
     next();
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    res.status(400).json({ success: false, message: err.message });
   }
 };
