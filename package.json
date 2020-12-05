@@ -34,7 +34,8 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "uuid": "^8.3.1",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "yup": "^0.31.1"
   },
   "author": "ruddha2001",
   "license": "MIT"
