@@ -34,13 +34,10 @@ const getHtmlCode = async (config: RequestConfiguration): Promise<string> => {
 const getFontSize = (config: IncomingConfiguration): string => {
   const size = config.title ? config.title.length : 24;
 
-  if (size <= 25) {
+  if (size <= 30) {
     return '120px';
-  } else if (size > 25 && size <= 40) {
-    return '96px';
-  } else {
-    return '70px';
   }
+  return '90px';
 };
 
 export const getCssCode = (): string => {
