@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import expressRateLimit from 'express-rate-limit';
 import { customFilepathGeneration, requestController } from './controllers/requestController';
 import multer, { MulterError } from 'multer';
@@ -46,11 +46,12 @@ const customTemplateHandler = async (req: Request, res: Response) => {
   }
 };
 
-const errorHandler = (err: Error, req: Request, res: Response) => {
+const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err);
   let newError = Error('Internal Server Error');
   if (err instanceof MulterError) {
     newError = Error('File could not be handled');
   }
   res.status(500).json({ success: false, messsage: newError.message });
+  next();
 };
