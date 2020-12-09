@@ -11,7 +11,20 @@ const rateLimiter = expressRateLimit({
   max: 30,
   message: 'You are limited to 30 custom OG images per minute.',
 });
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: function (req, file, cb) {
+    const filter = ['image/png', 'image/jpeg', 'image/gif'];
+    if (filter.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(Error('Unsupported media type'));
+    }
+  },
+  limits: {
+    fileSize: 10 * 1024 * 1024,
+  },
+});
 
 export default (): Router => {
   const app = Router();
@@ -48,9 +61,11 @@ const customTemplateHandler = async (req: Request, res: Response) => {
 
 const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err);
-  let newError = Error('Internal Server Error');
+  let newError: Error = null;
   if (err instanceof MulterError) {
     newError = Error('File could not be handled');
+  } else {
+    newError = Error('Internal Server Error');
   }
   res.status(500).json({ success: false, messsage: newError.message });
   next();
