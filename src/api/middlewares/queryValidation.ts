@@ -14,7 +14,7 @@ const querySchema = yup.object({
     .notRequired(),
   fontSize: yup
     .string()
-    .matches(/([0-9])\w+/)
+    .matches(/^[0-9]+px$/)
     .notRequired(),
 });
 
