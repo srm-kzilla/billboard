@@ -18,7 +18,7 @@ const upload = multer({
     if (filter.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(Error('Unsupported media type'));
+      cb(new Error('Unsupported media type'));
     }
   },
   limits: {
@@ -29,7 +29,7 @@ const upload = multer({
 export default (): Router => {
   const app = Router();
 
-  app.get('/:template', validateQuery, templateHandler);
+  app.get('/blog', validateQuery, templateHandler);
   app.post('/custom', rateLimiter, validateQuery, upload.single('image'), customTemplateHandler);
   app.use(errorHandler);
 
@@ -62,11 +62,8 @@ const customTemplateHandler = async (req: Request, res: Response) => {
 const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err);
   let newError: Error = null;
-  if (err instanceof MulterError) {
-    newError = Error('File could not be handled');
-  } else {
-    newError = Error('Internal Server Error');
-  }
+  if (err instanceof MulterError || err.message === 'Unsupported media type') newError = err;
+  else newError = new Error('Internal Server Error');
   res.status(500).json({ success: false, messsage: newError.message });
   next();
 };
