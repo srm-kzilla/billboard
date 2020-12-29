@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 
 const querySchema = yup.object({
   title: yup.string().max(40).notRequired(),
-  subtitle: yup.string().max(60).notRequired(),
+  subtitle: yup.string().max(100).notRequired(),
   theme: yup
     .string()
     .matches(/(dark|light)/)
