@@ -38,5 +38,6 @@
     "yup": "^0.31.1"
   },
   "author": "ruddha2001",
-  "license": "MIT"
+  "license": "MIT",
+  "version": "1.0.0"
 }
