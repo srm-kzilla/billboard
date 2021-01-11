@@ -1,10 +1,12 @@
 import bodyParser from 'body-parser';
+import { Request, Response, NextFunction } from 'express';
 import { join } from 'path';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import config from '../config';
 import routes from '../api';
+import logger from './logger';
 
 export default ({ app }: { app: express.Application }): void => {
   /**
@@ -40,4 +42,13 @@ export default ({ app }: { app: express.Application }): void => {
 
   // Load API routes
   app.use(config.api.prefix, routes());
+
+  app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    logger.error(err);
+    res.status(500).json({
+      code: 500,
+      message:
+        'Unexpected Server Error. Our best minds are working on this issue right now. Apologies for the inconvinience.',
+    });
+  });
 };
