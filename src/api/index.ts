@@ -6,11 +6,18 @@ import { getRequiredConfiguration } from '../utilities/sharedUtilities';
 import { IncomingConfiguration } from '../types/customTypes';
 import { validateQuery } from './middlewares/queryValidation';
 
-const rateLimiter = expressRateLimit({
+const rateLimiterGet = expressRateLimit({
   windowMs: 1 * 60 * 1000,
   max: 30,
-  message: 'You are limited to 30 custom OG images per minute.',
+  message: 'You are limited to 30 images per minute.',
 });
+
+const rateLimiterPost = expressRateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 20,
+  message: 'You are limited to 20 custom OG images per minute.',
+});
+
 const upload = multer({
   storage: multer.memoryStorage(),
   fileFilter: function (req, file, cb) {
@@ -29,8 +36,8 @@ const upload = multer({
 export default (): Router => {
   const app = Router();
 
-  app.get('/blog', validateQuery, templateHandler);
-  app.post('/custom', rateLimiter, validateQuery, upload.single('image'), customTemplateHandler);
+  app.get('/blog', rateLimiterGet, validateQuery, templateHandler);
+  app.post('/custom', rateLimiterPost, validateQuery, upload.single('image'), customTemplateHandler);
   app.use(errorHandler);
 
   return app;
