@@ -3,7 +3,7 @@
   "main": "build/index.js",
   "scripts": {
     "start": "node build/index.js",
-    "build": "tsc && cp -r ./src/assets ./build/assets",
+    "build": "tsc && cp -r ./src/assets ./build/assets && cp -r ./static ./build/static",
     "lint": "eslint . --ext .ts",
     "dev": "tsc-watch --onSuccess 'node ./build/index.js'",
     "test": "echo 'Success'"
@@ -37,7 +37,7 @@
     "winston": "^3.3.3",
     "yup": "^0.31.1"
   },
-  "author": "ruddha2001",
+  "author": "SRMKZILLA <technical@srmkzilla.net>",
   "license": "MIT",
   "version": "1.0.0"
 }
