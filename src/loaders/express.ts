@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
-import { Request, Response, NextFunction } from 'express';
 import { join } from 'path';
+import { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
@@ -30,6 +30,9 @@ export default ({ app }: { app: express.Application }): void => {
 
   // It shows the real origin IP in the heroku or Cloudwatch logs
   app.enable('trust proxy');
+
+  // Serve the static folder for the assets
+  app.use(express.static(join(__dirname, '..', 'static')));
 
   // Middleware that helps secure app by setting headers
   app.use(helmet());
